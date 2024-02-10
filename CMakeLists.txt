@@ -17,12 +17,18 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        constants.h
 )
+
+set(CMAKE_AUTORCC ON)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(VideoTrimmer
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        resources/res.rc
+        resources/res.qrc
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VideoTrimmer APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -68,3 +74,4 @@ install(TARGETS VideoTrimmer
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(VideoTrimmer)
 endif()
+

@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/menu"/>
+    <qresource prefix="/">
+        <file>../img/eraser.png</file>
+        <file>../img/exit.png</file>
+        <file>../img/minus.png</file>
+        <file>../img/plus.png</file>
+    </qresource>
+</RCC>
