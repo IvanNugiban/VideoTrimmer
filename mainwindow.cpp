@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <QFileDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete fileManager;
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -22,7 +23,9 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionAdd_triggered()
 {
-    fileManager->addFile(1);
+    QStringList filesName = QFileDialog::getOpenFileNames(this, "Select videos", "",  "mp4 (*.mp4)");
+
+    fileManager->addFiles(filesName);
 
     switchPage();
 }

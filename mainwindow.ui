@@ -121,7 +121,7 @@
                  <string notr="true">border:0</string>
                 </property>
                 <property name="text">
-                 <string>Drop files here</string>
+                 <string>Drop videos here</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
