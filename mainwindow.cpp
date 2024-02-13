@@ -3,15 +3,15 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow), fileManager{new FileManager{}}
 {
     ui->setupUi(this);
-    this->setCentralWidget(ui->gridLayoutWidget);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete fileManager;
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -19,3 +19,14 @@ void MainWindow::on_actionExit_triggered()
     QCoreApplication::quit();
 }
 
+
+void MainWindow::on_actionAdd_triggered()
+{
+    fileManager->addFile(1);
+
+    switchPage();
+}
+
+void MainWindow::switchPage() {
+    ui->stackedWidget->setCurrentIndex(fileManager->getFilesNum() == 0 ? noFilesPage : filesPage);
+}

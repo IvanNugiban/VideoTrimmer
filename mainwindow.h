@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "FileManager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,7 +21,19 @@ public:
 private slots:
     void on_actionExit_triggered();
 
+    void on_actionAdd_triggered();
+
 private:
-    Ui::MainWindow *ui;
+
+    enum pages {
+        filesPage,
+        noFilesPage
+    };
+
+    Ui::MainWindow* ui;
+
+    FileManager* fileManager;
+
+    void switchPage();
 };
 #endif // MAINWINDOW_H

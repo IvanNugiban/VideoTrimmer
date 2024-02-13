@@ -28,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         resources/res.rc
         resources/res.qrc
+        filemanager.h filemanager.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
