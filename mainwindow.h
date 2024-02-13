@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include "FileManager.h"
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QDropEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,6 +20,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected:
+
+    virtual void dragEnterEvent(QDragEnterEvent *e) override;
+    virtual void dropEvent(QDropEvent *e) override;
 
 private slots:
     void on_actionExit_triggered();
