@@ -50,4 +50,6 @@ void MainWindow::dropEvent(QDropEvent *e)
         QString fileName = url.toLocalFile();
         fileManager->addFiles(fileName);
     }
+
+    switchPage();
 }
