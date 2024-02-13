@@ -10,6 +10,7 @@ class FileManager
 public:
 
     FileManager() = default;
+    ~FileManager();
 
     void addFiles(const QStringList& fileNames);
 
