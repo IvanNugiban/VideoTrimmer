@@ -31,6 +31,8 @@ private slots:
 
     void on_actionAdd_triggered();
 
+    void on_actionClear_triggered();
+
 private:
 
     enum pages {
@@ -42,6 +44,8 @@ private:
 
     FileManager* fileManager;
 
-    void switchPage();
+    void toggleUi();
+    void drawFiles();
+    void clearUi(QLayout *layout);
 };
 #endif // MAINWINDOW_H

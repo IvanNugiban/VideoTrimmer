@@ -5,6 +5,12 @@
 #include <vector>
 #include <QFile>
 
+struct MediaFile {
+    QFile* file;
+    int cutMin{0};
+    int cutMax{};
+};
+
 class FileManager
 {
 public:
@@ -14,16 +20,17 @@ public:
 
     void addFiles(const QString& fileName);
     void addFiles(const QStringList& fileNames);
+    void clearFiles();
 
+    std::vector<MediaFile*>& getFiles();
     int getFilesNum();
 
 private:
 
     // Files array, type of files undecided for now
-    std::vector<QFile*> files{};
+    std::vector<MediaFile*> files{};
 
     bool isFileValid(const QFile* file);
-
 };
 
 #endif

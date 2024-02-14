@@ -13,7 +13,9 @@ void FileManager::addFiles(const QString& fileName) {
 
     QFile* file = new QFile{fileName};
 
-    if (isFileValid(file)) files.push_back(file);
+    MediaFile* mediaFile = new MediaFile{file};
+
+    if (isFileValid(file)) files.push_back(mediaFile);
 }
 
 void FileManager::addFiles(const QStringList& fileNames) {
@@ -23,8 +25,25 @@ void FileManager::addFiles(const QStringList& fileNames) {
 
         if (!isFileValid(file)) continue;
 
-        files.push_back(file);
+         MediaFile* mediaFile = new MediaFile{file};
+
+        files.push_back(mediaFile);
     }
+}
+
+void FileManager::clearFiles()
+{
+    for (auto const& mediaFile : files) {
+        delete mediaFile->file;
+        delete mediaFile;
+    }
+
+    files.clear();
+}
+
+std::vector<MediaFile*>& FileManager::getFiles()
+{
+    return files;
 }
 
 bool FileManager::isFileValid(const QFile* file)
@@ -47,4 +66,5 @@ bool FileManager::isFileValid(const QFile* file)
 int FileManager::getFilesNum() {
     return static_cast<int>(files.size());
 }
+
 

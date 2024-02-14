@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include "fileitem.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     this->acceptDrops();
+    ui->stackedWidget->setCurrentIndex(noFilesPage);
 }
 
 MainWindow::~MainWindow()
@@ -29,11 +31,52 @@ void MainWindow::on_actionAdd_triggered()
 
     fileManager->addFiles(filesName);
 
-    switchPage();
+    toggleUi();
+    drawFiles();
 }
 
-void MainWindow::switchPage() {
-    ui->stackedWidget->setCurrentIndex(fileManager->getFilesNum() == 0 ? noFilesPage : filesPage);
+void MainWindow::on_actionClear_triggered()
+{
+    clearUi(ui->scrollAreaWidgetContents->layout());
+    fileManager->clearFiles();
+    toggleUi();
+}
+
+void MainWindow::toggleUi() {
+    bool hasFiles = fileManager->getFilesNum() > 0;
+
+    ui->stackedWidget->setCurrentIndex(hasFiles ? filesPage : noFilesPage);
+    ui->actionClear->setEnabled(hasFiles);
+}
+
+void MainWindow::drawFiles()
+{
+    auto layout = ui->scrollAreaWidgetContents->layout();
+
+    clearUi(layout);
+
+    auto files = fileManager->getFiles();
+
+    for (auto* mediaFile : files) {
+        FileItem* fileItem = new FileItem{this, mediaFile};
+
+        layout->addWidget(fileItem);
+    }
+}
+
+void MainWindow::clearUi(QLayout *layout)
+{
+    QLayoutItem *item;
+    while((item = layout->takeAt(0))) {
+        if (item->layout()) {
+            clearUi(item->layout());
+            delete item->layout();
+        }
+        if (item->widget()) {
+            delete item->widget();
+        }
+        delete item;
+    }
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *e) {
@@ -51,5 +94,8 @@ void MainWindow::dropEvent(QDropEvent *e)
         fileManager->addFiles(fileName);
     }
 
-    switchPage();
+    toggleUi();
+    drawFiles();
 }
+
+
