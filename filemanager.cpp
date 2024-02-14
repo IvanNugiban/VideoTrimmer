@@ -4,9 +4,7 @@
 #include "constants.h"
 
 FileManager::~FileManager() {
-    for (auto* file : files) {
-        delete file;
-    }
+    clearFiles();
 }
 
 void FileManager::addFiles(const QString& fileName) {
