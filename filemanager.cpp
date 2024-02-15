@@ -29,6 +29,11 @@ void FileManager::addFiles(const QStringList& fileNames) {
     }
 }
 
+void FileManager::removeFile(int index)
+{
+    files.erase(files.begin() + index);
+}
+
 void FileManager::clearFiles()
 {
     for (auto const& mediaFile : files) {

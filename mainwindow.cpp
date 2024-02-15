@@ -10,8 +10,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QPalette defaultPalette{};
+    defaultPalette.setColor(QPalette::Window, Qt::white);
+    this->setPalette(defaultPalette);
+
     this->acceptDrops();
     ui->stackedWidget->setCurrentIndex(noFilesPage);
+
+    QObject::connect(QApplication::instance(), SIGNAL(focusChanged(QWidget *, QWidget *)), this, SLOT(on_focus_changed(QWidget *, QWidget *)));
 }
 
 MainWindow::~MainWindow()
@@ -42,11 +48,59 @@ void MainWindow::on_actionClear_triggered()
     toggleUi();
 }
 
+void MainWindow::on_actionRemove_triggered()
+{
+    fileManager->removeFile(selectedFileIndex);
+    selectedFileIndex = -1;
+
+    toggleUi();
+    drawFiles();
+}
+
+void MainWindow::on_focus_changed(QWidget *old, QWidget *now)
+{
+    auto* oldFileItem = qobject_cast<FileItem*>(old);
+    auto* newFileItem = qobject_cast<FileItem*>(now);
+
+    auto* layout = ui->scrollAreaWidgetContents->layout();
+
+    if (oldFileItem) {
+        oldFileItem->focusout();
+    }
+
+    if (newFileItem) {
+
+        newFileItem->focus();
+
+        for (int i = 0; i < layout->count(); ++i)
+        {
+            QWidget *widget = layout->itemAt(i)->widget();
+            if (widget == newFileItem)
+            {
+                selectedFileIndex = i;
+                break;
+            }
+        }
+    }
+
+    else selectedFileIndex = -1;
+
+    toggleSelectedUi();
+}
+
 void MainWindow::toggleUi() {
     bool hasFiles = fileManager->getFilesNum() > 0;
 
     ui->stackedWidget->setCurrentIndex(hasFiles ? filesPage : noFilesPage);
     ui->actionClear->setEnabled(hasFiles);
+
+    toggleSelectedUi();
+}
+
+void MainWindow::toggleSelectedUi()
+{
+    bool fileSelected =  selectedFileIndex != -1;
+    ui->actionRemove->setEnabled(fileSelected);
 }
 
 void MainWindow::drawFiles()
@@ -97,5 +151,8 @@ void MainWindow::dropEvent(QDropEvent *e)
     toggleUi();
     drawFiles();
 }
+
+
+
 
 

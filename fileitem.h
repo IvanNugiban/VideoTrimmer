@@ -19,6 +19,9 @@ public:
     FileItem(QWidget *parent = nullptr, MediaFile* info = nullptr);
     ~FileItem();
 
+    void focus();
+    void focusout();
+
 private:
 
    Ui::FileItem* ui;

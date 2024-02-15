@@ -10,6 +10,9 @@
     <height>330</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::ClickFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -25,6 +28,29 @@
    </property>
    <item>
     <widget class="QLabel" name="file_name">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>150</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+      </font>
+     </property>
      <property name="text">
       <string>Name</string>
      </property>
@@ -51,6 +77,9 @@
    </item>
    <item>
     <widget class="QSlider" name="horizontalSlider">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="singleStep">
       <number>0</number>
      </property>
@@ -83,6 +112,9 @@
    </item>
    <item>
     <widget class="QPushButton" name="pushButton">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="text">
       <string>Trim</string>
      </property>

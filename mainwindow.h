@@ -33,6 +33,10 @@ private slots:
 
     void on_actionClear_triggered();
 
+    void on_focus_changed(QWidget * old, QWidget * now);
+
+    void on_actionRemove_triggered();
+
 private:
 
     enum pages {
@@ -41,10 +45,11 @@ private:
     };
 
     Ui::MainWindow* ui;
-
     FileManager* fileManager;
+    int selectedFileIndex{-1};
 
     void toggleUi();
+    void toggleSelectedUi();
     void drawFiles();
     void clearUi(QLayout *layout);
 };

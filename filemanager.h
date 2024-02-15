@@ -20,6 +20,7 @@ public:
 
     void addFiles(const QString& fileName);
     void addFiles(const QStringList& fileNames);
+    void removeFile(int index);
     void clearFiles();
 
     std::vector<MediaFile*>& getFiles();
