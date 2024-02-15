@@ -9,6 +9,7 @@ inline constexpr int windowWidth{600};
 inline constexpr int windowHeight{450};
 inline const std::string supportedExtensions {"mp4"};
 inline const QColor focusedColor{"#E9F1F9"};
+inline const int sliderMaxValue{99};
 }
 
 #endif

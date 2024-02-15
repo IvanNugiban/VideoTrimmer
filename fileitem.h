@@ -30,7 +30,9 @@ private:
 
    void setupUi();
 
-signals:
+private slots:
+
+   void on_slider_moved(int min, int max);
 };
 
 #endif // FILEITEM_H

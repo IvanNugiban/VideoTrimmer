@@ -76,23 +76,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QSlider" name="horizontalSlider">
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="singleStep">
-      <number>0</number>
-     </property>
-     <property name="pageStep">
-      <number>0</number>
-     </property>
-     <property name="tracking">
-      <bool>true</bool>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
+    <widget class="CutControls" name="cut_controls" native="true"/>
    </item>
    <item>
     <spacer name="horizontalSpacer_2">
@@ -122,6 +106,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CutControls</class>
+   <extends>QWidget</extends>
+   <header>cutcontrols.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

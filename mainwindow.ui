@@ -345,7 +345,7 @@
        <number>10</number>
       </property>
       <item>
-       <widget class="QSlider" name="horizontalSlider_2">
+       <widget class="RangeSlider" name="horizontalSlider_2">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -534,6 +534,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RangeSlider</class>
+   <extends>QSlider</extends>
+   <header>rangeslider.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources/res.qrc"/>
  </resources>
