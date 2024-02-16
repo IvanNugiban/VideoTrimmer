@@ -345,18 +345,9 @@
        <number>10</number>
       </property>
       <item>
-       <widget class="RangeSlider" name="horizontalSlider_2">
+       <widget class="CutControls" name="cut_controls" native="true">
         <property name="enabled">
          <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -430,6 +421,7 @@
     <property name="title">
      <string>Edit</string>
     </property>
+    <addaction name="actionLock_Unlock"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -490,6 +482,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionClear"/>
+   <addaction name="actionLock_Unlock"/>
   </widget>
   <action name="actionAdd">
    <property name="icon">
@@ -533,12 +526,25 @@
     <string>Clear</string>
    </property>
   </action>
+  <action name="actionLock_Unlock">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources/res.qrc">
+     <normaloff>:/img/lock.png</normaloff>:/img/lock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock / Unlock</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>RangeSlider</class>
-   <extends>QSlider</extends>
-   <header>rangeslider.h</header>
+   <class>CutControls</class>
+   <extends>QWidget</extends>
+   <header>cutcontrols.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

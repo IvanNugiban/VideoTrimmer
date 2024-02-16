@@ -6,5 +6,7 @@
         <file>../img/minus.png</file>
         <file>../img/plus.png</file>
         <file>../img/plus-small.png</file>
+        <file>../img/lock.png</file>
+        <file>../img/unlock.png</file>
     </qresource>
 </RCC>

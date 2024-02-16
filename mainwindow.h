@@ -2,10 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "FileManager.h"
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QDropEvent>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,6 +37,10 @@ private slots:
 
     void on_actionRemove_triggered();
 
+    void on_slider_moved(int low, int high);
+
+    void on_actionLock_Unlock_triggered();
+
 private:
 
     enum pages {
@@ -45,12 +49,15 @@ private:
     };
 
     Ui::MainWindow* ui;
-    FileManager* fileManager;
+    class FileManager* fileManager;
     int selectedFileIndex{-1};
 
     void toggleUi();
     void toggleSelectedUi();
     void drawFiles();
     void clearUi(QLayout *layout);
+    void setAllSliders(int low, int high);
+
+    class FileItem* getFileByIndex();
 };
 #endif // MAINWINDOW_H

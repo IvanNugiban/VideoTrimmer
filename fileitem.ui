@@ -97,7 +97,7 @@
    <item>
     <widget class="QPushButton" name="pushButton">
      <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Trim</string>

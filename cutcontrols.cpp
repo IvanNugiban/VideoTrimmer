@@ -17,15 +17,23 @@ CutControls::~CutControls()
     delete ui;
 }
 
-void CutControls::Setup(float maxValue, int sliderLeft, int sliderRight)
+void CutControls::setup(float maxValue, int sliderLeft, int sliderRight,  TextFormat format)
 {
     max = maxValue;
+    textFormat = format;
 
-    ui->slider->setLow(sliderLeft);
-    ui->slider->setHigh(sliderRight);
-
-    formatText(sliderLeft, sliderRight);
+    setSlider(sliderLeft, sliderRight);
 }
+
+void CutControls::setSlider(int low, int high)
+{
+    ui->slider->setLow(low);
+    ui->slider->setHigh(high);
+    ui->slider->repaint();
+
+    formatText(low, high);
+}
+
 
 RangeSlider *CutControls::getSlider()
 {
@@ -40,15 +48,19 @@ void CutControls::on_slider_moved(int low, int high)
 
 void CutControls::formatText(int low, int high)
 {
-    qDebug() << high;
+    if (textFormat == time) {
+        QTime time(0,0,0,0);
 
-    QTime time(0,0,0,0);
+        QTime first = time.addSecs(std::round(max / Constants::sliderMaxValue * low));
+        QTime second = time.addSecs(std::round(max / Constants::sliderMaxValue * high));
 
-    QTime first = time.addSecs(max / Constants::sliderMaxValue * low);
-    QTime second = time.addSecs(max / Constants::sliderMaxValue * high);
+        QString firstResult = first.toString("mm:ss");
+        QString secondResult = second.toString("mm:ss");
 
-    QString firstResult = first.toString("mm:ss");
-    QString secondResult = second.toString("mm:ss");
+        ui->info->setText(QString{"%1-%2"}.arg(firstResult, secondResult));
+    }
 
-    ui->info->setText(QString{"%1-%2"}.arg(firstResult).arg(secondResult));
+    else {
+        ui->info->setText(QString{"%1%-%2%"}.arg(QString::number(low + 1), QString::number(high + 1)));
+    }
 }

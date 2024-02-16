@@ -22,6 +22,11 @@ public:
     void focus();
     void focusout();
 
+    bool locked();
+    void toggleLock();
+
+    void setSlider(int lowPercent, int highPercent);
+
 private:
 
    Ui::FileItem* ui;
@@ -29,6 +34,9 @@ private:
    QFileInfo fileInfo;
 
    void setupUi();
+
+   // If file item is locked, then it will not be affected by main slider that changes all sliders.
+   bool isLocked{false};
 
 private slots:
 

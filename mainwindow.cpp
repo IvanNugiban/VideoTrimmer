@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "fileitem.h"
+#include "constants.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,14 +11,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+
     QPalette defaultPalette{};
     defaultPalette.setColor(QPalette::Window, Qt::white);
     this->setPalette(defaultPalette);
 
     this->acceptDrops();
+
     ui->stackedWidget->setCurrentIndex(noFilesPage);
+    ui->cut_controls->setup(100, 0, Constants::sliderMaxValue, CutControls::percents);
 
     QObject::connect(QApplication::instance(), SIGNAL(focusChanged(QWidget *, QWidget *)), this, SLOT(on_focus_changed(QWidget *, QWidget *)));
+    QObject::connect(ui->cut_controls->getSlider(), SIGNAL(sliderMoved(int, int)), this, SLOT(on_slider_moved(int,int)));
+
 }
 
 MainWindow::~MainWindow()
@@ -57,6 +63,21 @@ void MainWindow::on_actionRemove_triggered()
     drawFiles();
 }
 
+void MainWindow::on_slider_moved(int low, int high)
+{
+    setAllSliders(low, high);
+}
+
+void MainWindow::on_actionLock_Unlock_triggered()
+{
+    auto file = getFileByIndex();
+
+    if (file) {
+        file->toggleLock();
+        toggleSelectedUi();
+    }
+}
+
 void MainWindow::on_focus_changed(QWidget *old, QWidget *now)
 {
     auto* oldFileItem = qobject_cast<FileItem*>(old);
@@ -93,6 +114,7 @@ void MainWindow::toggleUi() {
 
     ui->stackedWidget->setCurrentIndex(hasFiles ? filesPage : noFilesPage);
     ui->actionClear->setEnabled(hasFiles);
+    ui->cut_controls->setEnabled(hasFiles);
 
     toggleSelectedUi();
 }
@@ -100,7 +122,15 @@ void MainWindow::toggleUi() {
 void MainWindow::toggleSelectedUi()
 {
     bool fileSelected =  selectedFileIndex != -1;
+
     ui->actionRemove->setEnabled(fileSelected);
+    ui->actionLock_Unlock->setEnabled(fileSelected);
+
+    if (fileSelected) {
+        auto fileItem = getFileByIndex();
+
+        ui->actionLock_Unlock->setIcon(QIcon{fileItem->locked() ? ":/img/unlock.png" : ":/img/lock.png"});
+    }
 }
 
 void MainWindow::drawFiles()
@@ -133,6 +163,27 @@ void MainWindow::clearUi(QLayout *layout)
     }
 }
 
+void MainWindow::setAllSliders(int low, int high)
+{
+    auto* layout = ui->scrollAreaWidgetContents->layout();
+
+    for (int i = 0; i < layout->count(); ++i)
+    {
+        QWidget* widget = layout->itemAt(i)->widget();
+
+        auto* fileItem = qobject_cast<FileItem*>(widget);
+
+        if (fileItem && !fileItem->locked()) {
+            fileItem->setSlider(low, high);
+        }
+    }
+}
+
+FileItem* MainWindow::getFileByIndex()
+{
+    return qobject_cast<FileItem*>(ui->scrollAreaWidgetContents->layout()->itemAt(selectedFileIndex)->widget());
+}
+
 void MainWindow::dragEnterEvent(QDragEnterEvent *e) {
 
     // If dropped content is files allow to proceed
@@ -151,8 +202,4 @@ void MainWindow::dropEvent(QDropEvent *e)
     toggleUi();
     drawFiles();
 }
-
-
-
-
 

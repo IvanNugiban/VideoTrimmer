@@ -13,10 +13,17 @@ class CutControls : public QWidget
     Q_OBJECT
 
 public:
+
+    enum TextFormat {
+        time,
+        percents
+    };
+
     explicit CutControls(QWidget *parent = nullptr);
     ~CutControls();
 
-    void Setup(float maxValue, int sliderLeft, int sliderRight);
+    void setup(float maxValue, int sliderLeft, int sliderRight, TextFormat format = time);
+    void setSlider(int low, int high);
 
     RangeSlider* getSlider();
 
@@ -27,6 +34,7 @@ private slots:
 private:
 
     Ui::CutControls *ui;
+    TextFormat textFormat{};
 
     float max{};
 
