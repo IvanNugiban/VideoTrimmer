@@ -7,23 +7,23 @@ FileManager::~FileManager() {
     clearFiles();
 }
 
-void FileManager::addFiles(const QString& fileName) {
+void FileManager::addFiles(const QString& fileName, int sliderMin, int sliderMax) {
 
     QFile* file = new QFile{fileName};
 
-    MediaFile* mediaFile = new MediaFile{file};
+    MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax};
 
     if (isFileValid(file)) files.push_back(mediaFile);
 }
 
-void FileManager::addFiles(const QStringList& fileNames) {
+void FileManager::addFiles(const QStringList& fileNames, int sliderMin, int sliderMax) {
     for (auto const& fileName : fileNames) {
 
         QFile* file = new QFile{fileName};
 
         if (!isFileValid(file)) continue;
 
-         MediaFile* mediaFile = new MediaFile{file};
+        MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax};
 
         files.push_back(mediaFile);
     }

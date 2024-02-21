@@ -18,8 +18,8 @@ public:
     FileManager() = default;
     ~FileManager();
 
-    void addFiles(const QString& fileName);
-    void addFiles(const QStringList& fileNames);
+    void addFiles(const QString& fileName, int sliderMin, int sliderMax);
+    void addFiles(const QStringList& fileNames, int sliderMin, int sliderMax);
     void removeFile(int index);
     void clearFiles();
 

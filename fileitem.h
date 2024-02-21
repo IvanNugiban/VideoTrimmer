@@ -34,6 +34,7 @@ private:
    QFileInfo fileInfo;
 
    void setupUi();
+   void setMediaFile(int min, int max);
 
    // If file item is locked, then it will not be affected by main slider that changes all sliders.
    bool isLocked{false};

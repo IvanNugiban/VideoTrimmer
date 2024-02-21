@@ -41,7 +41,9 @@ void MainWindow::on_actionAdd_triggered()
 {
     QStringList filesName = QFileDialog::getOpenFileNames(this, "Select videos", "",  "mp4 (*.mp4)");
 
-    fileManager->addFiles(filesName);
+    auto slider = ui->cut_controls->getSlider();
+
+    fileManager->addFiles(filesName, slider->low(), slider->high());
 
     toggleUi();
     drawFiles();
@@ -115,6 +117,8 @@ void MainWindow::toggleUi() {
     ui->stackedWidget->setCurrentIndex(hasFiles ? filesPage : noFilesPage);
     ui->actionClear->setEnabled(hasFiles);
     ui->cut_controls->setEnabled(hasFiles);
+
+    setAllSliders(ui->cut_controls->getSlider()->low(), ui->cut_controls->getSlider()->high());
 
     toggleSelectedUi();
 }
@@ -194,9 +198,11 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *e) {
 
 void MainWindow::dropEvent(QDropEvent *e)
 {
+    auto slider = ui->cut_controls->getSlider();
+
     for (const auto& url : e->mimeData()->urls()) {
         QString fileName = url.toLocalFile();
-        fileManager->addFiles(fileName);
+        fileManager->addFiles(fileName, slider->low(), slider->high());
     }
 
     toggleUi();

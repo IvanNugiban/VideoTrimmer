@@ -10,6 +10,7 @@ FileItem::FileItem(QWidget *parent, MediaFile* info)
     ui->cut_controls->setup(30, info->cutMin, info->cutMax);
 
     mediaFile = info;
+
     fileInfo = QFileInfo{*(mediaFile->file)};
     this->setAutoFillBackground(true);
 
@@ -49,11 +50,18 @@ bool FileItem::locked()
 void FileItem::setSlider(int lowPercent, int highPercent)
 {
     ui->cut_controls->setSlider(lowPercent, highPercent);
+    setMediaFile(lowPercent, highPercent);
 }
 
 void FileItem::setupUi()
 {
     ui->file_name->setText(fileInfo.fileName());
+}
+
+void FileItem::setMediaFile(int min, int max)
+{
+    mediaFile->cutMin = min;
+    mediaFile->cutMax = max;
 }
 
 void FileItem::toggleLock()
@@ -63,6 +71,5 @@ void FileItem::toggleLock()
 
 void FileItem::on_slider_moved(int min, int max)
 {
-    mediaFile->cutMin = min;
-    mediaFile->cutMax = max;
+    setMediaFile(min, max);
 }
