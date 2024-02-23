@@ -12,7 +12,7 @@ void FileManager::addFiles(const QString& fileName, int sliderMin, int sliderMax
 
     QFile* file = new QFile{fileName};
 
-    int videoLength = Backend::GetVideoLength(fileName);
+    int videoLength = Backend::getVideoLength(fileName);
 
     MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax, videoLength};
 
@@ -26,7 +26,7 @@ void FileManager::addFiles(const QStringList& fileNames, int sliderMin, int slid
 
         QFile* file = new QFile{fileName};
 
-        int videoLength = Backend::GetVideoLength(fileName);
+        int videoLength = Backend::getVideoLength(fileName);
 
         if (!isFileValid(file) || videoLength == -1) continue;
 

@@ -40,7 +40,7 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionAdd_triggered()
 {
-    QStringList filesName = Backend::AddFilesPromt();
+    QStringList filesName = Backend::addFilesPrompt();
 
     auto slider = ui->cut_controls->getSlider();
 
@@ -112,6 +112,13 @@ void MainWindow::on_focus_changed(QWidget *old, QWidget *now)
     toggleSelectedUi();
 }
 
+void MainWindow::on_actionCut_triggered()
+{
+    auto file = getFileByIndex();
+
+    if (file) file->cutVideo();
+}
+
 void MainWindow::toggleUi() {
     bool hasFiles = fileManager->getFilesNum() > 0;
 
@@ -130,6 +137,7 @@ void MainWindow::toggleSelectedUi()
 
     ui->actionRemove->setEnabled(fileSelected);
     ui->actionLock_Unlock->setEnabled(fileSelected);
+    ui->actionCut->setEnabled(fileSelected);
 
     if (fileSelected) {
         auto fileItem = getFileByIndex();
@@ -209,4 +217,6 @@ void MainWindow::dropEvent(QDropEvent *e)
     toggleUi();
     drawFiles();
 }
+
+
 

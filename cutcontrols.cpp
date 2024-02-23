@@ -51,8 +51,8 @@ void CutControls::formatText(int low, int high)
     if (textFormat == time) {
         QTime time(0,0,0,0);
 
-        QTime first = time.addSecs(Backend::PercentToLength(low, max));
-        QTime second = time.addSecs(Backend::PercentToLength(high, max));
+        QTime first = time.addSecs(Backend::percentToLength(low, max));
+        QTime second = time.addSecs(Backend::percentToLength(high, max));
 
         QString firstResult = first.toString("mm:ss");
         QString secondResult = second.toString("mm:ss");

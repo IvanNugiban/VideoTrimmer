@@ -7,18 +7,18 @@
 #include "constants.h"
 
 namespace Backend {
-    void CutVideo(const MediaFile* mediaFile)
+void cutVideo(const MediaFile* mediaFile)
     {
         QFileInfo fileInfo{*mediaFile->file};
 
         QString fileExt = fileInfo.suffix();
         QString inputPath{fileInfo.filePath()};
-        QString outputPath{SaveFilePrompt()};
+        QString outputPath{saveFilePrompt()};
 
         if (outputPath == "") return;
 
-        QString cutMin{QString::number(Backend::PercentToLength(mediaFile->cutMin, mediaFile->duration))};
-        QString cutMax{QString::number(Backend::PercentToLength(mediaFile->cutMax, mediaFile->duration))};
+        QString cutMin{QString::number(Backend::percentToLength(mediaFile->cutMin, mediaFile->duration))};
+        QString cutMax{QString::number(Backend::percentToLength(mediaFile->cutMax, mediaFile->duration))};
         QProcess process;
 
 
@@ -33,17 +33,17 @@ namespace Backend {
         process.waitForFinished();
     }
 
-    QString SaveFilePrompt()
+    QString saveFilePrompt()
     {
         return QFileDialog::getSaveFileName(nullptr, "Save video", "",  QString::fromStdString(Constants::supportedExtensionsExt));
     }
 
-    QStringList AddFilesPromt()
+    QStringList addFilesPrompt()
     {
         return  QFileDialog::getOpenFileNames(nullptr, "Select videos", "",  QString::fromStdString(Constants::supportedExtensionsExt));
     }
 
-    int GetVideoLength(const QString& path)
+    int getVideoLength(const QString& path)
     {
         QProcess process;
 
@@ -61,7 +61,7 @@ namespace Backend {
         return std::floor(process.readAllStandardOutput().toDouble());
     }
 
-    int PercentToLength(int value, float max)
+    int percentToLength(int value, float max)
     {
         return std::round(max / Constants::sliderMaxValue * value);
     }

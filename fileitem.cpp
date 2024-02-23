@@ -25,6 +25,16 @@ FileItem::~FileItem()
     delete ui;
 }
 
+void FileItem::on_slider_moved(int min, int max)
+{
+    setMediaFile(min, max);
+}
+
+void FileItem::on_pushButton_clicked()
+{
+    cutVideo();
+}
+
 void FileItem::focus()
 {
     QPalette pal = QPalette();
@@ -54,6 +64,11 @@ void FileItem::setSlider(int lowPercent, int highPercent)
     setMediaFile(lowPercent, highPercent);
 }
 
+void FileItem::cutVideo()
+{
+    Backend::cutVideo(mediaFile);
+}
+
 void FileItem::setupUi()
 {
     ui->file_name->setText(fileInfo.fileName());
@@ -70,13 +85,4 @@ void FileItem::toggleLock()
     isLocked = !isLocked;
 }
 
-void FileItem::on_slider_moved(int min, int max)
-{
-    setMediaFile(min, max);
-}
-
-void FileItem::on_pushButton_clicked()
-{
-    Backend::CutVideo(mediaFile);
-}
 

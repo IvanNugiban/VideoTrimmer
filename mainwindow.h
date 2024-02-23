@@ -41,6 +41,8 @@ private slots:
 
     void on_actionLock_Unlock_triggered();
 
+    void on_actionCut_triggered();
+
 private:
 
     enum pages {

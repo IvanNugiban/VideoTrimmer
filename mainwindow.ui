@@ -422,6 +422,7 @@
      <string>Edit</string>
     </property>
     <addaction name="actionLock_Unlock"/>
+    <addaction name="actionCut"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -536,6 +537,18 @@
    </property>
    <property name="text">
     <string>Lock / Unlock</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources/res.qrc">
+     <normaloff>:/img/cut.png</normaloff>:/img/cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cut</string>
    </property>
   </action>
  </widget>

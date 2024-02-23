@@ -4,11 +4,11 @@
 #include "filemanager.h"
 
 namespace Backend {
-    void CutVideo(const MediaFile* mediaFile);
-    QString SaveFilePrompt();
-    QStringList AddFilesPromt();
-    int GetVideoLength(const QString& path);
-    int PercentToLength(int value, float max);
+    void cutVideo(const MediaFile* mediaFile);
+    QString saveFilePrompt();
+    QStringList addFilesPrompt();
+    int getVideoLength(const QString& path);
+    int percentToLength(int value, float max);
 }
 
 #endif

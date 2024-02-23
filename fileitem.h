@@ -26,6 +26,7 @@ public:
     void toggleLock();
 
     void setSlider(int lowPercent, int highPercent);
+    void cutVideo();
 
 private:
 
