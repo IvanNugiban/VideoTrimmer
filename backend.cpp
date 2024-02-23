@@ -23,7 +23,7 @@ void cutVideo(const MediaFile* mediaFile)
 
 
         process.start("D:\\Coding\\VideoTrimmer\\VideoTrimmer\\lib\\ffmpeg\\bin\\ffmpeg.exe",
-                      QStringList() << "-i" << inputPath << "-ss" << cutMin << "-to"  << cutMax << "-c:v" << "copy" << "-c:a" << "copy"  << outputPath) ;
+                      QStringList() <<  "-y" << "-i" << inputPath << "-ss" << cutMin << "-to"  << cutMax << "-c:v" << "copy" << "-c:a" << "copy"  << outputPath) ;
 
         if (!process.waitForStarted()) {
             qDebug() << "error:" << process.errorString();
