@@ -7,13 +7,14 @@
 #include "constants.h"
 
 namespace Backend {
-void cutVideo(const MediaFile* mediaFile)
+void cutVideo(const MediaFile* mediaFile, QString output)
     {
         QFileInfo fileInfo{*mediaFile->file};
 
-        QString fileExt = fileInfo.suffix();
         QString inputPath{fileInfo.filePath()};
-        QString outputPath{saveFilePrompt()};
+        QString outputPath{output};
+
+        if (output == "") outputPath = saveFilePrompt();
 
         if (outputPath == "") return;
 
@@ -33,9 +34,29 @@ void cutVideo(const MediaFile* mediaFile)
         process.waitForFinished();
     }
 
+    void cutVideos(const std::vector<MediaFile *> &files)
+    {
+        QString dir = getDirectoryPrompt();
+
+        if (dir == "") return;
+
+        for (int i{0}; i < files.size(); i++) {
+
+            QFileInfo fileInfo{*files[i]->file};
+            QString fileExt = fileInfo.suffix();
+
+            cutVideo(files[i], dir + '/' + fileInfo.baseName() + " cut" + QString::number(i + 1) + '.' + fileExt);
+        }
+    }
+
     QString saveFilePrompt()
     {
         return QFileDialog::getSaveFileName(nullptr, "Save video", "",  QString::fromStdString(Constants::supportedExtensionsExt));
+    }
+
+    QString getDirectoryPrompt()
+    {
+        return QFileDialog::getExistingDirectory(nullptr, "Select directory");
     }
 
     QStringList addFilesPrompt()
@@ -65,8 +86,5 @@ void cutVideo(const MediaFile* mediaFile)
     {
         return std::round(max / Constants::sliderMaxValue * value);
     }
-
-
-
 
 }

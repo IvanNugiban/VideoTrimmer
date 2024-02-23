@@ -119,12 +119,19 @@ void MainWindow::on_actionCut_triggered()
     if (file) file->cutVideo();
 }
 
+void MainWindow::on_trim_all_button_clicked()
+{
+    Backend::cutVideos(fileManager->getFiles());
+}
+
+
 void MainWindow::toggleUi() {
     bool hasFiles = fileManager->getFilesNum() > 0;
 
     ui->stackedWidget->setCurrentIndex(hasFiles ? filesPage : noFilesPage);
     ui->actionClear->setEnabled(hasFiles);
     ui->cut_controls->setEnabled(hasFiles);
+    ui->trim_all_button->setEnabled(hasFiles);
 
     setAllSliders(ui->cut_controls->getSlider()->low(), ui->cut_controls->getSlider()->high());
 
@@ -217,6 +224,5 @@ void MainWindow::dropEvent(QDropEvent *e)
     toggleUi();
     drawFiles();
 }
-
 
 

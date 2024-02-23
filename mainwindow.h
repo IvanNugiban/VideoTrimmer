@@ -43,6 +43,8 @@ private slots:
 
     void on_actionCut_triggered();
 
+    void on_trim_all_button_clicked();
+
 private:
 
     enum pages {
