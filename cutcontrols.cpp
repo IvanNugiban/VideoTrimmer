@@ -1,7 +1,7 @@
 #include "cutcontrols.h"
 #include "qdatetime.h"
 #include "ui_cutcontrols.h"
-#include "constants.h"
+#include "backend.h"
 
 CutControls::CutControls(QWidget *parent)
     : QWidget(parent)
@@ -51,8 +51,8 @@ void CutControls::formatText(int low, int high)
     if (textFormat == time) {
         QTime time(0,0,0,0);
 
-        QTime first = time.addSecs(std::round(max / Constants::sliderMaxValue * low));
-        QTime second = time.addSecs(std::round(max / Constants::sliderMaxValue * high));
+        QTime first = time.addSecs(Backend::PercentToLength(low, max));
+        QTime second = time.addSecs(Backend::PercentToLength(high, max));
 
         QString firstResult = first.toString("mm:ss");
         QString secondResult = second.toString("mm:ss");

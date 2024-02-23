@@ -42,6 +42,7 @@ private:
 private slots:
 
    void on_slider_moved(int min, int max);
+    void on_pushButton_clicked();
 };
 
 #endif // FILEITEM_H

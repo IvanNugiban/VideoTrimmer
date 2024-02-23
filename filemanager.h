@@ -9,6 +9,7 @@ struct MediaFile {
     QFile* file;
     int cutMin{0};
     int cutMax{99};
+    int duration{5};
 };
 
 class FileManager

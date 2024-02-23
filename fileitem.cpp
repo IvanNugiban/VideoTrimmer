@@ -1,13 +1,14 @@
 #include "fileitem.h"
 #include "./ui_fileitem.h"
 #include "constants.h"
+#include "backend.h"
 
 FileItem::FileItem(QWidget *parent, MediaFile* info)
     : QWidget(parent)
     , ui(new Ui::FileItem)
 {
     ui->setupUi(this);
-    ui->cut_controls->setup(30, info->cutMin, info->cutMax);
+    ui->cut_controls->setup(info->duration, info->cutMin, info->cutMax);
 
     mediaFile = info;
 
@@ -73,3 +74,9 @@ void FileItem::on_slider_moved(int min, int max)
 {
     setMediaFile(min, max);
 }
+
+void FileItem::on_pushButton_clicked()
+{
+    Backend::CutVideo(mediaFile);
+}
+

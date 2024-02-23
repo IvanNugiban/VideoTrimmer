@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include "constants.h"
+#include "backend.h"
 
 FileManager::~FileManager() {
     clearFiles();
@@ -11,9 +12,13 @@ void FileManager::addFiles(const QString& fileName, int sliderMin, int sliderMax
 
     QFile* file = new QFile{fileName};
 
-    MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax};
+    int videoLength = Backend::GetVideoLength(fileName);
 
-    if (isFileValid(file)) files.push_back(mediaFile);
+    MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax, videoLength};
+
+    if (isFileValid(file) && videoLength != -1) {
+        files.push_back(mediaFile);
+    }
 }
 
 void FileManager::addFiles(const QStringList& fileNames, int sliderMin, int sliderMax) {
@@ -21,9 +26,11 @@ void FileManager::addFiles(const QStringList& fileNames, int sliderMin, int slid
 
         QFile* file = new QFile{fileName};
 
-        if (!isFileValid(file)) continue;
+        int videoLength = Backend::GetVideoLength(fileName);
 
-        MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax};
+        if (!isFileValid(file) || videoLength == -1) continue;
+
+        MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax, videoLength};
 
         files.push_back(mediaFile);
     }

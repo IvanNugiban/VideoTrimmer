@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include "fileitem.h"
 #include "constants.h"
+#include "backend.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -39,7 +40,7 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionAdd_triggered()
 {
-    QStringList filesName = QFileDialog::getOpenFileNames(this, "Select videos", "",  "mp4 (*.mp4)");
+    QStringList filesName = Backend::AddFilesPromt();
 
     auto slider = ui->cut_controls->getSlider();
 
