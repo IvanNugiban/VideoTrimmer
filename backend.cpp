@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include "constants.h"
 
+static QString curDir{};
+
 namespace Backend {
 
 void initialize()
@@ -19,6 +21,10 @@ void initialize()
 
     dir.removeRecursively();
     dir.mkpath(".");
+
+    curDir = QDir::currentPath();
+
+    qDebug() << curDir;
 }
 
 
@@ -38,7 +44,7 @@ void cutVideo(const MediaFile* mediaFile, QString output)
         QProcess process;
 
 
-        process.start("D:\\Coding\\VideoTrimmer\\VideoTrimmer\\lib\\ffmpeg\\bin\\ffmpeg.exe",
+        process.start(curDir + "/ffmpeg/ffmpeg.exe",
                       QStringList() <<  "-y" << "-ss" << QString::number(cutMin) << "-i" << inputPath << "-c"  << "copy"  << "-t"
                                     << QString::number(cutMax - cutMin + 1) << outputPath) ;
 
@@ -71,7 +77,7 @@ void cutVideo(const MediaFile* mediaFile, QString output)
 
         QString outputPath = "./tmp/thumbnail" + QString::number(id) + ".png";
 
-        process.start("D:\\Coding\\VideoTrimmer\\VideoTrimmer\\lib\\ffmpeg\\bin\\ffmpeg.exe",
+        process.start(curDir + "/ffmpeg/ffmpeg.exe",
                       QStringList() <<  "-i" << filePath <<  "-ss" <<  "00:00:01.000" << "-vframes" <<  "1"
                                     << outputPath);
 
@@ -104,7 +110,7 @@ void cutVideo(const MediaFile* mediaFile, QString output)
     {
         QProcess process;
 
-        process.start("D:\\Coding\\VideoTrimmer\\VideoTrimmer\\lib\\ffmpeg\\bin\\ffprobe.exe",
+        process.start(curDir + "/ffmpeg/ffprobe.exe",
                       QStringList() << "-v" << "error" << "-show_entries" << "format=duration" << "-of" <<
                           "default=noprint_wrappers=1:nokey=1" << path);
 
