@@ -23,8 +23,6 @@ void initialize()
     dir.mkpath(".");
 
     curDir = QDir::currentPath();
-
-    qDebug() << curDir;
 }
 
 
