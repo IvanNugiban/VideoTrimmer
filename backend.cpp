@@ -7,6 +7,21 @@
 #include "constants.h"
 
 namespace Backend {
+
+void initialize()
+{
+    QDir dir("tmp");
+
+    if (!dir.exists()) {
+        dir.mkpath(".");
+        return;
+    }
+
+    dir.removeRecursively();
+    dir.mkpath(".");
+}
+
+
 void cutVideo(const MediaFile* mediaFile, QString output)
     {
         QFileInfo fileInfo{*mediaFile->file};
@@ -18,13 +33,14 @@ void cutVideo(const MediaFile* mediaFile, QString output)
 
         if (outputPath == "") return;
 
-        QString cutMin{QString::number(Backend::percentToLength(mediaFile->cutMin, mediaFile->duration))};
-        QString cutMax{QString::number(Backend::percentToLength(mediaFile->cutMax, mediaFile->duration))};
+        int cutMin{Backend::percentToLength(mediaFile->cutMin, mediaFile->duration)};
+        int cutMax{Backend::percentToLength(mediaFile->cutMax, mediaFile->duration)};
         QProcess process;
 
 
         process.start("D:\\Coding\\VideoTrimmer\\VideoTrimmer\\lib\\ffmpeg\\bin\\ffmpeg.exe",
-                      QStringList() <<  "-y" << "-i" << inputPath << "-ss" << cutMin << "-to"  << cutMax << "-c:v" << "copy" << "-c:a" << "copy"  << outputPath) ;
+                      QStringList() <<  "-y" << "-ss" << QString::number(cutMin) << "-i" << inputPath << "-c"  << "copy"  << "-t"
+                                    << QString::number(cutMax - cutMin + 1) << outputPath) ;
 
         if (!process.waitForStarted()) {
             qDebug() << "error:" << process.errorString();
@@ -47,6 +63,26 @@ void cutVideo(const MediaFile* mediaFile, QString output)
 
             cutVideo(files[i], dir + '/' + fileInfo.baseName() + " cut" + QString::number(i + 1) + '.' + fileExt);
         }
+    }
+
+    QString createThumbnail(const QString& filePath, int id)
+    {
+        QProcess process;
+
+        QString outputPath = "./tmp/thumbnail" + QString::number(id) + ".png";
+
+        process.start("D:\\Coding\\VideoTrimmer\\VideoTrimmer\\lib\\ffmpeg\\bin\\ffmpeg.exe",
+                      QStringList() <<  "-i" << filePath <<  "-ss" <<  "00:00:01.000" << "-vframes" <<  "1"
+                                    << outputPath);
+
+        if (!process.waitForStarted()) {
+            qDebug() << "error:" << process.errorString();
+            return "";
+        }
+
+        process.waitForFinished();
+
+        return outputPath;
     }
 
     QString saveFilePrompt()
@@ -86,5 +122,7 @@ void cutVideo(const MediaFile* mediaFile, QString output)
     {
         return std::round(max / Constants::sliderMaxValue * value);
     }
+
+
 
 }

@@ -3,10 +3,13 @@
 #include <QApplication>
 #include <QPushButton>
 #include "constants.h"
+#include "backend.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    Backend::initialize();
 
     MainWindow mainWindow{};
 

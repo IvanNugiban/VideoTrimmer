@@ -10,6 +10,7 @@ struct MediaFile {
     int cutMin{0};
     int cutMax{99};
     int duration{5};
+    QString thumbnail{};
 };
 
 class FileManager
@@ -33,6 +34,7 @@ private:
     std::vector<MediaFile*> files{};
 
     bool isFileValid(const QFile* file);
+    int currentFile{1};
 };
 
 #endif

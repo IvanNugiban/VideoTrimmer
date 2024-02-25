@@ -14,10 +14,13 @@ void FileManager::addFiles(const QString& fileName, int sliderMin, int sliderMax
 
     int videoLength = Backend::getVideoLength(fileName);
 
-    MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax, videoLength};
+    QString thumbnail = Backend::createThumbnail(fileName, currentFile);
+
+    MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax, videoLength, thumbnail};
 
     if (isFileValid(file) && videoLength != -1) {
         files.push_back(mediaFile);
+        currentFile++;
     }
 }
 
@@ -30,9 +33,12 @@ void FileManager::addFiles(const QStringList& fileNames, int sliderMin, int slid
 
         if (!isFileValid(file) || videoLength == -1) continue;
 
-        MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax, videoLength};
+        QString thumbnail = Backend::createThumbnail(fileName, currentFile);
+
+        MediaFile* mediaFile = new MediaFile{file, sliderMin, sliderMax, videoLength, thumbnail};
 
         files.push_back(mediaFile);
+        currentFile++;
     }
 }
 

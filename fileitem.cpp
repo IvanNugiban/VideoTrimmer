@@ -9,6 +9,7 @@ FileItem::FileItem(QWidget *parent, MediaFile* info)
 {
     ui->setupUi(this);
     ui->cut_controls->setup(info->duration, info->cutMin, info->cutMax);
+    ui->thumbnail->setPixmap(info->thumbnail);
 
     mediaFile = info;
 
