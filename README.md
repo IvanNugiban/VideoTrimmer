@@ -4,7 +4,7 @@ Video Trimmer is a qt based application with simple interface to make cutting vi
 
 ## Interface
 
-![Interface](https://github.com/IvanNugiban/VideoTrimmer/blob/master/doc/screenshot.png)
+![Interface](https://github.com/IvanNugiban/VideoTrimmer/blob/master/img/screenshot.png)
 
 ## Building from source
 
